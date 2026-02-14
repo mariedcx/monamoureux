@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour mon Valentin</title>
+    <style>
+        :root {
+            --rose-fond: #ffebf3;
+            --rose-coeur: #ff69b4;
+            --rose-bulle: #ffffff;
+        }
+
+        body {
+            background-color: var(--rose-fond);
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animation des poussins en fond */
+        .poussins-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            font-size: 24px;
+        }
+
+        /* Le Coeur Central */
+        .coeur-conteneur {
+            margin-top: 50px;
+            position: relative;
+            width: 300px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation: battement 1.2s infinite;
+        }
+
+        .coeur-svg {
+            position: absolute;
+            fill: var(--rose-coeur);
+            width: 100%;
+            z-index: 1;
+        }
+
+        .coeur-texte {
+            position: relative;
+            z-index: 2;
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            font-size: 1.2rem;
+        }
+
+        /* Bulles de choix */
+        .bulles-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .bulle {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-align: center;
+            max-width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bulle:hover { transform: scale(1.05); }
+
+        .bulle img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* La Lettre Géante */
+        #lettre-geante {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 500px;
+            background: #fff9f0;
+            border: 2px solid #f0ad4e;
+            padding: 30px;
+            z-index: 100;
+            box-shadow: 0 0 100px rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+
+        .poeme {
+            font-style: italic;
+            line-height: 1.6;
+            white-space: pre-line;
+            text-align: center;
+        }
+
+        /* Bulle Négative */
+        #bulle-non {
+            transition: all 0.4s ease;
+        }
+
+        /* Signature */
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.9rem;
+            color: #d63384;
+            font-weight: bold;
+        }
+
+        @keyframes battement {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .photo-p3 { display: none; width: 100%; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="poussins-bg" id="poussins"></div>
+
+    <div class="coeur-conteneur">
+        <svg class="coeur-svg" viewBox="0 0 32 29.6">
+            <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,16,19.2,16,19.2s16-9.8,16-19.2C32,3.8,28.2,0,23.6,0z"/>
+        </svg>
+        <div class="coeur-texte">le Valentin de mon coeur, pour mon amour éternel</div>
+    </div>
+
+    <div class="bulles-container">
+        <div class="bulle" onclick="ouvrirLettre(event)">
+            <img src="photo1.png" alt="Nous">
+            <p>avec passion</p>
+        </div>
+
+        <div class="bulle" id="bulle-non" onclick="agrandirBulle(event)">
+            <p id="texte-non">surtout pas ton Valentin</p>
+            <img src="photo3.png" id="img-p3" class="photo-p3">
+        </div>
+    </div>
+
+    <div id="lettre-geante">
+        <button onclick="this.parentElement.style.display='none'" style="float:right">X</button>
+        <img src="photo2.png" style="width:100%; border-radius:10px; margin-bottom:15px;" alt="Enveloppe">
+        <div class="poeme">
+            Avec toi je ris, avec toi je frissonne,
+            Même le lundi devient une bonne personne.
+            Plus doux qu’un chocolat, plus chaud qu’un café,
+            Mon cœur te choisit, et recommence à t’aimer.
+        </div>
+        <div style="text-align: center; margin-top: 15px;">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJndXIzcXVueXh5amZidXJreHh3em9qamF3bmZ6Z3R6Z3Z6Z3Z6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCBhbmQsc2hvd19nb3BlbiZjdD1n/M90mJvfWfd5qU/giphy.gif" width="100" alt="Câlin">
+        </div>
+    </div>
+
+    <div class="signature">ton pousskin amoureux</div>
+
+    <script>
+        // Générer les poussins en fond
+        const bg = document.getElementById('poussins');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.innerText = '🐥';
+            p.style.position = 'absolute';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = Math.random() * 100 + 'vh';
+            p.style.opacity = '0.3';
+            bg.appendChild(p);
+        }
+
+        // Effet de paillettes
+        function créerPaillettes(e) {
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.innerText = '✨';
+                p.style.position = 'fixed';
+                p.style.left = e.clientX + 'px';
+                p.style.top = e.clientY + 'px';
+                p.style.pointerEvents = 'none';
+                p.style.transition = 'all 1s';
+                document.body.appendChild(p);
+                
+                setTimeout(() => {
+                    p.style.transform = `translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px)`;
+                    p.style.opacity = '0';
+                }, 10);
+                setTimeout(() => p.remove(), 1000);
+            }
+        }
+
+        function ouvrirLettre(e) {
+            créerPaillettes(e);
+            document.getElementById('lettre-geante').style.display = 'block';
+        }
+
+        let etape = 0;
+        const messages = [
+            "tu es sur ?",
+            "je ne cliquerai pas dessus",
+            "j'ai dit arrête mon pousspouss"
+        ];
+
+        function agrandirBulle(e) {
+            créerPaillettes(e);
+            const bulle = document.getElementById('bulle-non');
+            const texte = document.getElementById('texte-non');
+            const img = document.getElementById('img-p3');
+
+            if (etape < messages.length) {
+                texte.innerText = messages[etape];
+                let scale = 1 + (etape + 1) * 0.3;
+                bulle.style.transform = `scale(${scale})`;
+                etape++;
+            } else {
+                bulle.style.transform = "scale(1.5)";
+                texte.style.display = "none";
+                img.style.display = "block";
+                bulle.style.background = "white";
+            }
+        }
+    </script>
+</body>
+</html>
